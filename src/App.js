@@ -1,26 +1,29 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as ClapSvg } from './svg/clapSvg.svg';
 import { PolygonPieces } from './components/PolygonPieces';
 
 function App() {
-  let timer;
+  const timer = useRef(null);
   const [clapNum, setClapNum] = useState(0);
   const [rotateDeg, setRotateDeg] = useState(0);
-  const [mouseStillDown, setMouseStillDown] = useState(false);
 
   const handleClap = () => {
     console.log('down');
 
-    timer = setTimeout(() => {
-      setClapNum(clapNum + 1);
-      setRotateDeg(rotateDeg + 36);
-    }, 100);
+    timer.current = setInterval(() => {
+      console.log(`clapNum: ${clapNum}`);
+      setClapNum((preClapNum) => preClapNum + 1);
+      setRotateDeg((preRotateDeg) => preRotateDeg + 36);
+    }, 180);
+
+    console.log('timer:', timer.current);
   };
 
   const handleStopClap = () => {
+    console.log('timer to close:', timer.current);
     console.log('up');
-    clearTimeout(timer);
+    clearInterval(timer.current);
   };
 
   return (
