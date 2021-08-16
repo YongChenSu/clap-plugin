@@ -9,20 +9,19 @@ function App() {
   const [rotateDeg, setRotateDeg] = useState(0);
 
   const handleClap = () => {
-    console.log('down');
+    setClapNum((preClapNum) => preClapNum + 1);
+    setRotateDeg((preRotateDeg) => preRotateDeg + 36);
+  }
 
+  const handleClaps = () => {
     timer.current = setInterval(() => {
       console.log(`clapNum: ${clapNum}`);
       setClapNum((preClapNum) => preClapNum + 1);
       setRotateDeg((preRotateDeg) => preRotateDeg + 36);
-    }, 180);
-
-    console.log('timer:', timer.current);
+    }, 130);
   };
 
-  const handleStopClap = () => {
-    console.log('timer to close:', timer.current);
-    console.log('up');
+  const handleStopClaps = () => {
     clearInterval(timer.current);
   };
 
@@ -38,7 +37,7 @@ function App() {
             <PolygonPieces />
             <PolygonPieces />
           </PolygonAssembly>
-          <ClapIcon onMouseDown={handleClap} onMouseUp={handleStopClap} />
+          <ClapIcon onClick={handleClap} onMouseDown={handleClaps} onMouseUp={handleStopClaps} />
         </ClapIconContainer>
         <ClapNum>{clapNum}</ClapNum>
       </ClapContainer>
